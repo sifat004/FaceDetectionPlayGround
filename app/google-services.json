@@ -1,0 +1,114 @@
+{
+  "project_info": {
+    "project_number": "871248501648",
+    "firebase_url": "https://sifatsdroid.firebaseio.com",
+    "project_id": "sifatsdroid",
+    "storage_bucket": "sifatsdroid.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:871248501648:android:20bbfaea5d6136c0b83115",
+        "android_client_info": {
+          "package_name": "com.sifatsdroid.bmi_calculator"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "871248501648-1ou3u7e7rljmgqq3ss9rdedn16m3r4uv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.sifatsdroid.bmi_calculator",
+            "certificate_hash": "7755155e1629027937dcede7fb9fbe94a456b292"
+          }
+        },
+        {
+          "client_id": "871248501648-9b1gfpvu8o0ric1utagf3sj09a2gugu8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAtjwFQQcwRiQ5QAlgdicN24sEqIVhaEsM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "871248501648-9b1gfpvu8o0ric1utagf3sj09a2gugu8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:871248501648:android:05a6f2fd693c5462b83115",
+        "android_client_info": {
+          "package_name": "com.sifatsdroid.facedetectionexp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "871248501648-9b1gfpvu8o0ric1utagf3sj09a2gugu8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAtjwFQQcwRiQ5QAlgdicN24sEqIVhaEsM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "871248501648-9b1gfpvu8o0ric1utagf3sj09a2gugu8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:871248501648:android:c5deb65fe2d44a37b83115",
+        "android_client_info": {
+          "package_name": "com.sifatsdroid.healthmate"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "871248501648-clsbacg91pnaok12291jbndhbvvouu42.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.sifatsdroid.healthmate",
+            "certificate_hash": "7755155e1629027937dcede7fb9fbe94a456b292"
+          }
+        },
+        {
+          "client_id": "871248501648-9b1gfpvu8o0ric1utagf3sj09a2gugu8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAtjwFQQcwRiQ5QAlgdicN24sEqIVhaEsM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "871248501648-9b1gfpvu8o0ric1utagf3sj09a2gugu8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
