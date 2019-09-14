@@ -1,15 +1,15 @@
 package com.sifatsdroid.facedetectionexp.facedetection
 
-import android.graphics.Bitmap
-import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.Paint
+import android.graphics.*
 import android.graphics.Paint.Style
-import android.graphics.Rect
+import android.util.Log
 import com.google.android.gms.vision.CameraSource
 import com.google.firebase.ml.vision.face.FirebaseVisionFace
 import com.google.firebase.ml.vision.face.FirebaseVisionFaceLandmark
 import com.sifatsdroid.facedetectionexp.common.GraphicOverlay
+import kotlin.math.pow
+import kotlin.math.sqrt
+
 
 /**
  * Graphic instance for rendering face position, orientation, and landmarks within an associated
@@ -18,7 +18,7 @@ import com.sifatsdroid.facedetectionexp.common.GraphicOverlay
 class FaceGraphic(
     overlay: GraphicOverlay,
     private val firebaseVisionFace: FirebaseVisionFace?,
-    private val facing: Int,
+    private val facing: Int?,
     private val overlayBitmap: Bitmap?
 ) :
     GraphicOverlay.Graphic(overlay) {
@@ -106,6 +106,12 @@ class FaceGraphic(
         drawLandmarkPosition(canvas, face, FirebaseVisionFaceLandmark.RIGHT_EAR)
         drawLandmarkPosition(canvas, face, FirebaseVisionFaceLandmark.RIGHT_EYE)
         drawLandmarkPosition(canvas, face, FirebaseVisionFaceLandmark.MOUTH_RIGHT)
+
+        Log.e("distance",
+            calculateLandMarkDistance(
+                face.getLandmark(FirebaseVisionFaceLandmark.MOUTH_LEFT),
+                face.getLandmark(FirebaseVisionFaceLandmark.MOUTH_RIGHT))
+                .toString())
     }
 
     private fun drawLandmarkPosition(canvas: Canvas, face: FirebaseVisionFace, landmarkID: Int) {
@@ -120,7 +126,33 @@ class FaceGraphic(
         }
     }
 
-    private fun drawBitmapOverLandmarkPosition(canvas: Canvas, face: FirebaseVisionFace, landmarkID: Int) {
+    private fun calculateLandMarkDistance(
+        landmark1: FirebaseVisionFaceLandmark?,
+        landmark2: FirebaseVisionFaceLandmark?
+    ): Double {
+
+        landmark1?:return 0.0
+        landmark2?:return 0.0
+        val x1 = landmark1.position.x.toDouble()
+        val y1 = landmark1.position.y.toDouble()
+        var z1 = landmark1.position.z ?.toDouble()
+        val x2 = landmark2.position.x.toDouble()
+        val y2 = landmark2.position.y.toDouble()
+        var z2 = landmark2.position.z ?.toDouble()
+
+        z1=z1?:0.0
+        z2=z2?:0.0
+
+        return sqrt((x1 - x2).pow(2.0) + (y1 - y2).pow(2.0) + (z1 - z2).pow(2.0))
+
+    }
+
+
+    private fun drawBitmapOverLandmarkPosition(
+        canvas: Canvas,
+        face: FirebaseVisionFace,
+        landmarkID: Int
+    ) {
         val landmark = face.getLandmark(landmarkID) ?: return
 
         val point = landmark.position
@@ -133,8 +165,10 @@ class FaceGraphic(
             val right = (translateX(point.x) + imageEdgeSizeBasedOnFaceSize).toInt()
             val bottom = (translateY(point.y) + imageEdgeSizeBasedOnFaceSize).toInt()
 
-            canvas.drawBitmap(it, null,
-                    Rect(left, top, right, bottom), null)
+            canvas.drawBitmap(
+                it, null,
+                Rect(left, top, right, bottom), null
+            )
         }
     }
 

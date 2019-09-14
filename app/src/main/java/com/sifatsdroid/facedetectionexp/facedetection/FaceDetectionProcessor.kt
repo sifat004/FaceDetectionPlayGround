@@ -50,7 +50,7 @@ class FaceDetectionProcessor(res: Resources) : VisionProcessorBase<List<Firebase
     override fun onSuccess(
         originalCameraImage: Bitmap?,
         results: List<FirebaseVisionFace>,
-        frameMetadata: FrameMetadata,
+        frameMetadata: FrameMetadata?,
         graphicOverlay: GraphicOverlay
     ) {
         graphicOverlay.clear()
@@ -58,8 +58,7 @@ class FaceDetectionProcessor(res: Resources) : VisionProcessorBase<List<Firebase
         graphicOverlay.add(imageGraphic)
         for (i in results.indices) {
             val face = results[i]
-
-            val cameraFacing = frameMetadata.cameraFacing
+            val cameraFacing = frameMetadata?.cameraFacing
             val faceGraphic = FaceGraphic(graphicOverlay, face, cameraFacing, overlayBitmap)
             graphicOverlay.add(faceGraphic)
         }

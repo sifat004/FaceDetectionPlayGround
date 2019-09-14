@@ -20,6 +20,8 @@ import androidx.camera.core.PreviewConfig.*
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.LifecycleOwner
+import com.sifatsdroid.facedetectionexp.facedetection.FaceContourDetectorProcessor
+import com.sifatsdroid.facedetectionexp.facedetection.FaceDetectionProcessor
 import com.sifatsdroid.facedetectionexp.imageAnalyzers.LuminosityAnalyzer
 import java.io.File
 
@@ -105,6 +107,7 @@ class MainActivity : AppCompatActivity(), LifecycleOwner {
                     override fun onImageSaved(file: File) {
                         val msg = "Photo capture succeeded: ${file.absolutePath}"
                         Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
+                        val fp= FaceDetectionProcessor(viewFinder.resources)
                         Log.d("CameraXApp", msg)
                     }
                 })

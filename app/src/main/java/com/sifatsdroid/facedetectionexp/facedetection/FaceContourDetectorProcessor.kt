@@ -23,9 +23,11 @@ class FaceContourDetectorProcessor : VisionProcessorBase<List<FirebaseVisionFace
 
     init {
         val options = FirebaseVisionFaceDetectorOptions.Builder()
-                .setPerformanceMode(FirebaseVisionFaceDetectorOptions.FAST)
-                .setContourMode(FirebaseVisionFaceDetectorOptions.ALL_CONTOURS)
-                .build()
+            .setPerformanceMode(FirebaseVisionFaceDetectorOptions.FAST)
+            .setContourMode(FirebaseVisionFaceDetectorOptions.ALL_CONTOURS)
+            .setClassificationMode(FirebaseVisionFaceDetectorOptions.ALL_CLASSIFICATIONS)
+            .setLandmarkMode(FirebaseVisionFaceDetectorOptions.ALL_LANDMARKS)
+            .build()
 
         detector = FirebaseVision.getInstance().getVisionFaceDetector(options)
     }
@@ -45,7 +47,7 @@ class FaceContourDetectorProcessor : VisionProcessorBase<List<FirebaseVisionFace
     override fun onSuccess(
         originalCameraImage: Bitmap?,
         results: List<FirebaseVisionFace>,
-        frameMetadata: FrameMetadata,
+        frameMetadata: FrameMetadata?,
         graphicOverlay: GraphicOverlay
     ) {
         graphicOverlay.clear()
@@ -66,6 +68,7 @@ class FaceContourDetectorProcessor : VisionProcessorBase<List<FirebaseVisionFace
     override fun onFailure(e: Exception) {
         Log.e(TAG, "Face detection failed $e")
     }
+
 
     companion object {
         private const val TAG = "FaceContourDetectorProc"
