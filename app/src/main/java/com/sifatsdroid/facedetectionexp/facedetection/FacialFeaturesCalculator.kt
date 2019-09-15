@@ -100,6 +100,8 @@ class FacialFeaturesCalculator(overlay: GraphicOverlay, private val firebaseVisi
 */
 
 
+
+
         for (point in contour.points) {
             val px = translateX(point.x)
             val py = translateY(point.y)
