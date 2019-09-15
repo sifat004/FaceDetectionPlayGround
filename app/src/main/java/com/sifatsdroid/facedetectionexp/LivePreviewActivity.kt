@@ -66,7 +66,7 @@ class LivePreviewActivity : AppCompatActivity(), OnRequestPermissionsResultCallb
         super.onCreate(savedInstanceState)
         Log.d(TAG, "onCreate")
 
-        setContentView(R.layout.activity_live_preview)
+        setContentView(R.layout.activity_home_live)
 
         if (firePreview == null) {
             Log.d(TAG, "Preview is null")

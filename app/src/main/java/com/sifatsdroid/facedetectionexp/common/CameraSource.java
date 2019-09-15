@@ -196,6 +196,7 @@ public class CameraSource {
     camera.setPreviewDisplay(surfaceHolder);
     camera.startPreview();
 
+
     processingThread = new Thread(processingRunnable);
     processingRunnable.setActive(true);
     processingThread.start();

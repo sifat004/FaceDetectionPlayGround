@@ -132,7 +132,7 @@ class ChooserActivity : AppCompatActivity(), ActivityCompat.OnRequestPermissions
         private const val PERMISSION_REQUESTS = 1
 
         private val CLASSES =
-                arrayOf<Class<*>>(LivePreviewActivity::class.java, StillImageActivity::class.java)
+                arrayOf<Class<*>>(TestActivity::class.java, StillImageActivity::class.java)
 
         private val DESCRIPTION_IDS =
                 intArrayOf(R.string.desc_camera_source_activity, R.string.desc_still_image_activity)

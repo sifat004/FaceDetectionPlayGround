@@ -2,13 +2,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.sifatsdroid.facedetectionexp">
+
     <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
-
 
     <application
         android:allowBackup="true"
@@ -18,9 +18,15 @@
         android:supportsRtl="true"
         android:theme="@style/MaterialTheme"
         tools:ignore="GoogleAppIndexingWarning">
+        <activity
+            android:name=".TestActivity"
+            android:label="@string/title_activity_test"
+            android:theme="@style/MaterialTheme.NoActionBar"></activity>
+
         <meta-data
             android:name="com.google.firebase.ml.vision.DEPENDENCIES"
             android:value="face" />
+
         <activity android:name=".ChooserActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -28,10 +34,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".MainActivity"/>
-        <activity android:name=".LivePreviewActivity"/>
-        <activity android:name=".StillImageActivity"/>
+        <activity android:name=".MainActivity" />
+        <activity android:name=".LivePreviewActivity" />
+        <activity android:name=".StillImageActivity" />
     </application>
 
 </manifest>
