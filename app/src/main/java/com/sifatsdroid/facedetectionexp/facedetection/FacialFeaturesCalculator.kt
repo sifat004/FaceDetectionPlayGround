@@ -4,6 +4,7 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import android.util.Log
+import android.widget.Toast
 import com.google.firebase.ml.vision.common.FirebaseVisionPoint
 import com.google.firebase.ml.vision.face.FirebaseVisionFace
 import com.google.firebase.ml.vision.face.FirebaseVisionFaceContour
@@ -14,7 +15,7 @@ import java.lang.Math.pow
 import kotlin.math.sqrt
 
 /** Graphic instance for rendering face contours graphic overlay view.  */
-class FaceContourGraphic(overlay: GraphicOverlay, private val firebaseVisionFace: FirebaseVisionFace?) :
+class FacialFeaturesCalculator(overlay: GraphicOverlay, private val firebaseVisionFace: FirebaseVisionFace?) :
     GraphicOverlay.Graphic(overlay) {
 
     private val facePositionPaint: Paint
@@ -44,9 +45,9 @@ class FaceContourGraphic(overlay: GraphicOverlay, private val firebaseVisionFace
         // Draws a circle at the position of the detected face, with the face's track id below.
         val x = translateX(face.boundingBox.centerX().toFloat())
         val y = translateY(face.boundingBox.centerY().toFloat())
-        canvas.drawCircle(x, y, FACE_POSITION_RADIUS, facePositionPaint)
+   /*     canvas.drawCircle(x, y, FACE_POSITION_RADIUS, facePositionPaint)
         canvas.drawText("id: ${face.trackingId}", x + ID_X_OFFSET, y + ID_Y_OFFSET, idPaint)
-
+*/
         Log.e("Face Graphic","onDraw")
 
         // Draws a bounding box around the face.
@@ -56,7 +57,7 @@ class FaceContourGraphic(overlay: GraphicOverlay, private val firebaseVisionFace
         val top = y - yOffset
         val right = x + xOffset
         val bottom = y + yOffset
-        canvas.drawRect(left, top, right, bottom, boxPaint)
+        //canvas.drawRect(left, top, right, bottom, boxPaint)
 
         val contour = face.getContour(FirebaseVisionFaceContour.ALL_POINTS)
         val nosePoint = face.getLandmark(FirebaseVisionFaceLandmark.NOSE_BASE)?.position?:return
@@ -67,11 +68,22 @@ class FaceContourGraphic(overlay: GraphicOverlay, private val firebaseVisionFace
 
         bottomMostPoint= FirebaseVisionPoint(nosePoint.x,bottomMostPoint.y,nosePoint.z)
         topMostPoint= FirebaseVisionPoint(nosePoint.x,topMostPoint.y,nosePoint.z)
-        val leftMostPoint= face.getLandmark(FirebaseVisionFaceLandmark.LEFT_EAR)?.position?:return
+        val leftMostPoint=  face.getLandmark(FirebaseVisionFaceLandmark.LEFT_EAR)?.position?:return
         val rightMostPoint  =  face.getLandmark(FirebaseVisionFaceLandmark.RIGHT_EAR)?.position?:return
 
+        val leftEyePoint= face.getLandmark(FirebaseVisionFaceLandmark.LEFT_EYE)?.position?:return
+        val rightEyePoint= face.getLandmark(FirebaseVisionFaceLandmark.RIGHT_EYE)?.position?:return
+        val leftCheekPoint= face.getLandmark(FirebaseVisionFaceLandmark.LEFT_CHEEK)?.position?:return
+        val rightCheekPoint= face.getLandmark(FirebaseVisionFaceLandmark.RIGHT_CHEEK)?.position?:return
+        val leftMouthPoint= face.getLandmark(FirebaseVisionFaceLandmark.MOUTH_LEFT)?.position?:return
+        val rightMouthPoint= face.getLandmark(FirebaseVisionFaceLandmark.MOUTH_RIGHT)?.position?:return
+        val bottomMouthPoint = face.getLandmark(FirebaseVisionFaceLandmark.MOUTH_BOTTOM)?.position?:return
 
-        Log.e("Face Graphic","boottomMos: "+ bottomMostPoint.x +","+ bottomMostPoint.y)
+        calculateGoldenRatios(topMostPoint,bottomMostPoint,leftMostPoint,rightMostPoint,
+            leftEyePoint,rightEyePoint,leftCheekPoint,rightCheekPoint,
+            leftMouthPoint,rightMouthPoint,nosePoint,bottomMouthPoint)
+
+/*        Log.e("Face Graphic","boottomMos: "+ bottomMostPoint.x +","+ bottomMostPoint.y)
         Log.e("Face Graphic","topMostPoint: "+ topMostPoint.x +","+ topMostPoint.y)
         Log.e("Face Graphic","nosePoint: "+ nosePoint.x +","+ nosePoint.y)
         Log.e("Face Graphic","ratio: "+calculateRatio(
@@ -79,11 +91,13 @@ class FaceContourGraphic(overlay: GraphicOverlay, private val firebaseVisionFace
             calculateDistanceBetweenPoints(leftMostPoint,rightMostPoint)
 
 
-        ))
+        ))*/
 
+/*
 
         canvas.drawLine(translateX(bottomMostPoint.x),translateY(bottomMostPoint.y),translateX(topMostPoint.x),translateY(topMostPoint.y),boxPaint)
         canvas.drawLine(translateX(leftMostPoint.x),translateY(leftMostPoint.y),translateX(rightMostPoint.x),translateY(rightMostPoint.y),boxPaint)
+*/
 
 
         for (point in contour.points) {
@@ -147,6 +161,48 @@ class FaceContourGraphic(overlay: GraphicOverlay, private val firebaseVisionFace
                     FACE_POSITION_RADIUS,
                     facePositionPaint)
         }
+    }
+
+    fun calculateGoldenRatios(
+        topMostPoint: FirebaseVisionPoint,
+        bottomMostPoint: FirebaseVisionPoint,
+        leftMostPoint: FirebaseVisionPoint,
+        rightMostPoint: FirebaseVisionPoint,
+        leftEyePoint: FirebaseVisionPoint,
+        rightEyePoint: FirebaseVisionPoint,
+        leftCheekPoint: FirebaseVisionPoint,
+        rightCheekPoint: FirebaseVisionPoint,
+        leftMouthPoint: FirebaseVisionPoint,
+        rightMouthPoint: FirebaseVisionPoint,
+        noseBasePoint: FirebaseVisionPoint,
+        bottomMouthPoint:FirebaseVisionPoint
+    ) {
+
+
+        val faceLengthWithoutHead=calculateDistanceBetweenPoints(topMostPoint,bottomMostPoint)
+        val faceLength=faceLengthWithoutHead+faceLengthWithoutHead/6
+        val faceWidth =   calculateDistanceBetweenPoints(leftMostPoint,rightMostPoint)
+        val goldenRatio1= calculateRatio(faceLength,faceWidth)
+
+        val eyeToChinDistance=  calculateDistanceBetweenPoints(leftEyePoint,bottomMostPoint)
+        val topForheadToEyeDistance= faceLength-eyeToChinDistance
+        val leftEyeToNoseBaseDistance= calculateDistanceBetweenPoints(leftEyePoint,noseBasePoint)
+        val rightEyeToNoseBaseDistance= calculateDistanceBetweenPoints(rightEyePoint,noseBasePoint)
+        val noseBaseToChinDistance= calculateDistanceBetweenPoints(bottomMostPoint,noseBasePoint)
+
+        val ratio1= calculateRatio(leftEyeToNoseBaseDistance,rightEyeToNoseBaseDistance)
+        val ratio2= calculateRatio(topForheadToEyeDistance,leftEyeToNoseBaseDistance)
+        val ratio3= calculateRatio(topForheadToEyeDistance,rightEyeToNoseBaseDistance)
+        val ratio4= calculateRatio(leftEyeToNoseBaseDistance,noseBaseToChinDistance)
+        val ratio5= calculateRatio(rightEyeToNoseBaseDistance,noseBaseToChinDistance)
+        val ratio6= calculateRatio(topForheadToEyeDistance,noseBaseToChinDistance)
+
+        val goldenRatio2= (ratio1+ratio2+ratio3+ratio4+ratio5+ratio6)/6
+
+        Log.d("Golden Ratio","goldenRatio1: $goldenRatio1")
+        Log.d("Golden Ratio","goldenRatio2: $goldenRatio2")
+
+        Toast.makeText(applicationContext,"goldenRatio1: $goldenRatio1 goldenRatio2: $goldenRatio2",Toast.LENGTH_LONG).show()
     }
 
     fun calculateDistanceBetweenPoints(

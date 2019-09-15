@@ -34,6 +34,7 @@ import com.google.firebase.ml.vision.objects.FirebaseVisionObjectDetectorOptions
 import com.sifatsdroid.facedetectionexp.common.CameraSource
 import com.sifatsdroid.facedetectionexp.facedetection.FaceContourDetectorProcessor
 import com.sifatsdroid.facedetectionexp.facedetection.FaceDetectionProcessor
+import com.sifatsdroid.facedetectionexp.facedetection.FaceFeaturesDetectorProcessor
 import kotlinx.android.synthetic.main.activity_live_preview.*
 
 /** Demo app showing the various features of ML Kit for Firebase. This class is used to
@@ -197,7 +198,7 @@ class LivePreviewActivity : AppCompatActivity(), OnRequestPermissionsResultCallb
                 }
             */    FACE_CONTOUR -> {
                     Log.i(TAG, "Using Face Contour Detector Processor")
-                    cameraSource?.setMachineLearningFrameProcessor(FaceContourDetectorProcessor())
+                    cameraSource?.setMachineLearningFrameProcessor(FaceFeaturesDetectorProcessor())
                 }
                 else -> Log.e(TAG, "Unknown model: $model")
             }

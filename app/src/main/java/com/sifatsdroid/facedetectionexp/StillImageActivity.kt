@@ -25,6 +25,7 @@ import com.sifatsdroid.facedetectionexp.cloudtextrecognition.CloudTextRecognitio
 import com.sifatsdroid.facedetectionexp.common.VisionImageProcessor
 import com.sifatsdroid.facedetectionexp.facedetection.FaceContourDetectorProcessor
 import com.sifatsdroid.facedetectionexp.facedetection.FaceDetectionProcessor
+import com.sifatsdroid.facedetectionexp.facedetection.FaceFeaturesDetectorProcessor
 import kotlinx.android.synthetic.main.activity_still_image.controlPanel
 import kotlinx.android.synthetic.main.activity_still_image.featureSelector
 import kotlinx.android.synthetic.main.activity_still_image.getImageButton
@@ -310,7 +311,7 @@ class StillImageActivity : AppCompatActivity() {
            else -> throw IllegalStateException("Unknown selectedMode: $selectedMode")
         }*/
 
-       imageProcessor=FaceContourDetectorProcessor()
+       imageProcessor=FaceFeaturesDetectorProcessor()
 
     }
 

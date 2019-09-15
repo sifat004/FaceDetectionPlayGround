@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/fireTopLayout"
     android:orientation="vertical"
     android:layout_width="match_parent"
@@ -33,6 +34,7 @@
       android:textSize="20sp"
       android:textStyle="bold" />
 
+
   <FrameLayout
       android:id="@+id/control"
       android:layout_width="match_parent"
@@ -59,5 +61,17 @@
           android:checked="false" />
 
   </FrameLayout>
+
+
+<!--    <com.sifatsdroid.facedetectionexp.common.ScannerOverlay
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#00000000"
+        android:backgroundTint="#00000000"
+        app:line_color="#7323DC"
+        app:line_speed="6"
+        app:line_width="5"
+        app:square_height="250"
+        app:square_width="250" />-->
 
 </RelativeLayout>
